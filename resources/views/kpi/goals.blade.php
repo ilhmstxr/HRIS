@@ -34,7 +34,7 @@
                                         <option>Choose...</option>
                                         @foreach ($member as $m)
                                             <option value="{{ $m->id }}">{{ $m->nama }} -
-                                                {{ $m->divisi->nama_divisi }} - {{$m->jabatan->nama_jabatan}}
+                                                {{ $m->divisi->nama_divisi }} - {{ $m->jabatan->nama_jabatan }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -208,7 +208,7 @@
                                             @endif
                                             <ul class="dropdown-menu">
                                                 @if (auth()->user()->role->role == 'admin')
-                                                    @if ($t->status != 'done')
+                                                    @if ($t->status == 'checking')
                                                         <form action="{{ route('goals.update_adm') }}" method="POST">
                                                             @csrf
                                                             <li><button class="dropdown-item" name="mark"
@@ -585,7 +585,8 @@
                                 $('#member_id').append(
                                     '<option class="text-capitalize" value="' +
                                     value.id + '">' + value.nama + ' ( ' + value
-                                    .divisi.nama_divisi + ' - ' + value.jabatan.nama_jabatan +
+                                    .divisi.nama_divisi + ' - ' + value.jabatan
+                                    .nama_jabatan +
                                     ' )' + '</option>');
                             });
                         }

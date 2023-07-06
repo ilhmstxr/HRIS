@@ -71,7 +71,8 @@
                                                 $doingCount_employee == null &&
                                                 $checkingCount_employee == null &&
                                                 $doneCount_employee == null)
-                                            <h1 style="display: " class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
+                                            <h1 style="display: " class="fw-bold text-center" id="data_kosong">BELUM ADA
+                                                TUGAS</h1>
                                         @else
                                             <canvas id="employee-canvas"></canvas>
                                         @endif
@@ -81,7 +82,8 @@
                                     <div class="chart-container" id="admin-chart">
                                         {{-- {!! $admin_chart->container() !!} --}}
                                         <canvas id="admin-canvas"></canvas>
-                                        <h1 style="display: none" class="fw-bold text-center" id="data_kosong">BELUM ADA TUGAS</h1>
+                                        <h1 style="display: none" class="fw-bold text-center" id="data_kosong">BELUM ADA
+                                            TUGAS</h1>
                                         {{-- <h1 style="display: " id="role">{{ $role }}</h1> --}}
                                     </div>
                                 @endif
@@ -144,7 +146,8 @@
                                                                     {{ date('d F Y', strtotime($t->created_at)) }} -
                                                                     {{ date('d F Y', strtotime($t->tanggal_target)) }}
                                                                     <br>
-                                                                    ({{ \Carbon\Carbon::parse($t->tanggal_target)->diffInDays() }} days left)
+                                                                    ({{ \Carbon\Carbon::parse($t->tanggal_target)->diffInDays() }}
+                                                                    days left)
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -176,8 +179,9 @@
                                                                     <div style="font-weight: 700">
                                                                         {{ date('d F Y', strtotime($t->created_at)) }}
                                                                     </div>
-                                                                    
-                                                                    <div class="text-muted" style="font-size: 13px; max-width:13rem">
+
+                                                                    <div class="text-muted"
+                                                                        style="font-size: 13px; max-width:13rem">
                                                                         {{ $t->created_at->diffForHumans() }}
                                                                     </div>
                                                                 </div>
@@ -307,7 +311,7 @@
                                             @if ($todoCount_employee > 0)
                                                 <div class="col-3">
                                                     <i class="fa-solid fa-square fa-2xl me-2 p-0"
-                                                        style="color: rgb(128, 128, 128);"></i>{{ ($todoCount_employee / $employee->count()) * 100 }}%
+                                                        style="color: #808080;"></i>{{ ($todoCount_employee / $employee->count()) * 100 }}%
                                                 </div>
                                             @else
                                                 <div class="col-3">
@@ -354,11 +358,7 @@
         // import LarapexChart from 'laravel-larapex-charts';
 
         $(document).ready(function() {
-            // employee-chart
-            // var role = {!! $role !!};
-            // var role = document.getElementById("role");
             @if (auth()->user()->role->role == 'admin')
-                //admin-chart
                 var changepie = document.getElementById('admin-canvas');
                 var chart_all = new Chart(changepie, {
                     type: 'pie',
@@ -430,47 +430,47 @@
                         var done = data.doneCount;
                         var kosong = data.null;
 
+
+                        // gatau perbedaannya
                         chart_all.destroy();
-                        if (kosong == 1) {
-                            document.getElementById('data_kosong').style.display = "inline";
-                        } else {
-                            // $('#admin').html('data kosong');
+                        // if (zkosong !== 1) {
+                        //     document.getElementById('data_kosong').style.display = "none";
+                        //     chart_all = new Chart(changepie, {
+                        //         type: 'pie',
+                        //         data: {
+                        //             labels: ['To do', 'Doing', 'Checking', 'Done'],
+                        //             datasets: [{
+                        //                 data: [todo, doing, checking, done],
+                        //                 backgroundcolor: ['#808080', '#0861fd',
+                        //                     '#ffa500',
+                        //                     '#69d36d'
+                        //                 ]
+                        //             }]
+                        //         }
+                        //     });
+
+                        if (kosong !== 1) {
                             document.getElementById('data_kosong').style.display = "none";
                             chart_all = new Chart(changepie, {
                                 type: 'pie',
                                 data: {
-                                    labels: [
-                                        'To do',
-                                        'Doing',
-                                        'Checking',
-                                        'Done'
-                                    ],
+                                    labels: ['To do', 'Doing', 'Checking', 'Done'],
                                     datasets: [{
-                                        data: [
-                                            todo,
-                                            doing,
-                                            checking,
-                                            done
-                                        ],
-                                        backgroundcolor: [
-                                            '#808080',
-                                            '#0861fd',
-                                            '#ffa500',
+                                        data: [todo, doing, checking, done],
+                                        backgroundColor: ['#808080',
+                                            '#0861fd', '#ffa500',
                                             '#69d36d'
                                         ]
                                     }]
                                 }
                             });
+
+                            chart.data.datasets.push(newDataset);
+                            chart_all.update();
+                        } else {
+                            document.getElementById('data_kosong').style.display = "inline";
+
                         }
-                        // new LarapexChart().pieChart();
-                        // chart.setLabels(['To do', 'Doing', 'Checking', 'Done'])
-                        // chart.setColors(['#808080', '#0861fd', '#ffa500', '#69d36d'])
-                        // chart.setDataset([todo, doing, checking, done]);
-                        // // chart.setDataset(['1','2','3','4','5']);
-
-                        // chart.render('#admin-chart')
-
-
                     },
                     error: function(xhr) {
                         console.log(xhr.responseText);
